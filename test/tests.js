@@ -14,3 +14,15 @@ test('post /create/character', assert => {
 			assert.end();
 		})
 });
+
+test('get /read/:playerName', assert => {
+	request(app)
+		.get('/read/testPlayer')
+		.expect(200)
+		.expect('Content-Type', /json/)
+		.end((err, res) => {
+			if (err) return assert.fail(err);
+			assert.pass('Read character created by testPlayer successfully, test passed!');
+			assert.end();
+		})
+})

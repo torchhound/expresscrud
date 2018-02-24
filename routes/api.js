@@ -34,4 +34,19 @@ router.post('/create/character', function(req, res, next) {
 	}
 });
 
+router.get('/read/:playerName', function(req, res, next) {
+	db.all('SELECT PlayerName, CharacterName, Race, Class FROM Characters WHERE PlayerName = ?', req.params.playerName, function(error, rows) {
+		if (error) {
+			console.error(error.message);
+			res.status(400).send(`SQLite Error: ${error.message}`);
+		} else {
+			let responseArray = [];
+			rows.forEach((row) => {
+				responseArray.push(JSON.stringify({'playerName': row.PlayerName, 'characterName': row.CharacterName, 'race': row.Race, 'class': row.Class}))
+			});
+			res.status(200).json(JSON.stringify({'playerName': responseArray}));
+		}
+	});	
+})
+
 module.exports = router;
