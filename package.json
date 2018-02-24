@@ -1,0 +1,28 @@
+{
+  "name": "expresscrud",
+  "version": "1.0.0",
+  "description": "dungeons and databases",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torchhound/expresscrud.git"
+  },
+  "author": "torchhound",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/torchhound/expresscrud/issues"
+  },
+  "homepage": "https://github.com/torchhound/expresscrud#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "sqlite3": "^3.1.13",
+    "supertest": "^3.0.0",
+    "tape": "^4.9.0"
+  }
+}

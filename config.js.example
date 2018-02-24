@@ -1,0 +1,5 @@
+var config = {
+	dbFile: ""
+}
+
+module.exports = config;
