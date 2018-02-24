@@ -25,4 +25,16 @@ test('get /read/:playerName', assert => {
 			assert.pass('Read character created by testPlayer successfully, test passed!');
 			assert.end();
 		})
+});
+
+test('post /update/:characterName', assert => {
+	request(app)
+		.post('/update/testCharacter')
+		.expect(200)
+		.send({"playerName": "testPlayer", "characterName": "testCharacter", "race": "Elf", "class": "Rogue"})
+		.end((err, res) => {
+			if (err) return assert.fail(err);
+			assert.pass('Updated character created by testPlayer successfully, test passed!');
+			assert.end();
+		})
 })

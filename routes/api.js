@@ -12,7 +12,7 @@ var db = new sqlite3.Database(dbFile, (error) => {
 	console.log("Connected to " + dbFile);
 });
 
-db.run('CREATE TABLE IF NOT EXISTS Characters (PlayerName text, CharacterName text, Race text, Class text)', function(error) {
+db.run('CREATE TABLE IF NOT EXISTS Characters (PlayerName text UNIQUE, CharacterName text UNIQUE, Race text, Class text)', function(error) {
 	if (error) {
 		console.error(error.message);
 	}
@@ -35,7 +35,7 @@ router.post('/create/character', function(req, res, next) {
 });
 
 router.get('/read/:playerName', function(req, res, next) {
-	db.all('SELECT PlayerName, CharacterName, Race, Class FROM Characters WHERE PlayerName = ?', req.params.playerName, function(error, rows) {
+	db.all('SELECT PlayerName, CharacterName, Race, Class FROM Characters WHERE PlayerName = ? GROUP BY CharacterName', req.params.playerName, function(error, rows) {
 		if (error) {
 			console.error(error.message);
 			res.status(400).send(`SQLite Error: ${error.message}`);
@@ -47,6 +47,21 @@ router.get('/read/:playerName', function(req, res, next) {
 			res.status(200).json(JSON.stringify({'playerName': responseArray}));
 		}
 	});	
+});
+
+router.post('/update/:characterName', function(req, res, next) {
+	if (Object.keys(req.body).length === 0 && obj.constructor === Object) {
+		res.status(400).send('Empty JSON');
+	} else {
+		db.run('UPDATE Characters SET PlayerName = ?, CharacterName = ?, Race = ?, Class = ? WHERE CharacterName = ?', req.body.playerName, req.body.characterName, req.body.race, req.body.class, req.params.characterName, function(error) {
+			if (error) {
+				console.error(error.message);
+				res.status(400).send(`SQLite Error: ${error.message}`);
+			} else {
+				res.status(200).send(`Character updated!`);	
+			}
+		});
+	}
 })
 
 module.exports = router;

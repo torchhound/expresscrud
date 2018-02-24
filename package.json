@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/tests.js"
+    "test": "rm -rf crud.db; node test/tests.js"
   },
   "repository": {
     "type": "git",
