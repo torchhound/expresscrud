@@ -49,7 +49,7 @@ router.get('/read/:playerName', function(req, res, next) {
 	});	
 });
 
-router.post('/update/:characterName', function(req, res, next) {
+router.patch('/update/:characterName', function(req, res, next) {
 	if (Object.keys(req.body).length === 0 && obj.constructor === Object) {
 		res.status(400).send('Empty JSON');
 	} else {
@@ -58,10 +58,21 @@ router.post('/update/:characterName', function(req, res, next) {
 				console.error(error.message);
 				res.status(400).send(`SQLite Error: ${error.message}`);
 			} else {
-				res.status(200).send(`Character updated!`);	
+				res.status(200).send('Character updated!');	
 			}
 		});
 	}
-})
+});
+
+router.delete('/delete/:characterName', function(req, res, next) {
+	db.run('DELETE FROM Characters WHERE CharacterName = ?', req.params.characterName, function(error) {
+		if (error) {
+			console.error(error.message);
+			res.status(400).send(`SQLite Error: ${error.message}`);
+		} else {
+			res.status(200).send(`Deleted ${req.params.characterName}`);	
+		}
+	});
+});
 
 module.exports = router;

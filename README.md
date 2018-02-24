@@ -1,6 +1,6 @@
 # expresscrud
 
-dungeons and databases: simple CRUD edition. Built with Express.js and sqlite3.
+dungeons and databases: simple CRUD edition. Built with Express.js and sqlite3. Allows you to post a JSON Character with /create/character, get a JSON Character with /read/:playerName, update a Character with a JSON patch to /update/:characterName, and finally delete a Character with /delete/:characterName.
 
 ## Installing
 
